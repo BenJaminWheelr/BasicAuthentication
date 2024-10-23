@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Destination Tracker</title>
+        <link rel="stylesheet" href="{% static 'destinationApp/styles.css'%}">
+    </head>
+    <body>
+        <div id="BannerDiv">
+            <a href="/"><h1 id="BannerText">Destinations</h1></a>
+            <div>
+                    <a href="/destinations/" id="BannerText">My Destinations</a>
+                    <a href="/sessions/destroy/" id="BannerText">Log Out</a>
+                    <a href="/destinations/new/" id="BannerText">Add Destination</a>
+            </div>
+        </div>
+        <div id="welcome">
+            <h1 id="welcomeText">My Destinations</h1>
+        </div>
+        {% if destinations %}
+            {% for destination in destinations %}
+            <a href="/destinations/{{destination.id}}/" id="destinationLink">
+                <div id="destinationDiv">
+                    <div>
+                        <h2>{{destination.name}}</h2>
+                        <h3>Rating: {{destination.rating}}</h3>
+                        <h3>{% if destination.public == 0 %}
+                            Not Public
+                        {% else %}
+                            Public
+                        {% endif %}    
+                        </h3>
+                    </div>
+                    <h3 id="reviewHeading">{{destination.review}}</h3>
+                </div>
+            </a>
+            {% endfor %}
+        {% else %}
+        <p>You don't have any destinations!</p>
+        {% endif %}
+
+    </body>
+</html>

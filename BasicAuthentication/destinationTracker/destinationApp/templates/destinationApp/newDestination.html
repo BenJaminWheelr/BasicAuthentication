@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Destination Tracker</title>
+        <link rel="stylesheet" href="{% static 'destinationApp/styles.css'%}">
+    </head>
+    <body>
+        <div id="BannerDiv">
+            <a href="/"><h1 id="BannerText">Destinations</h1></a>
+            <div>
+                <a href="/destinations/" id="BannerText">My Destinations</a>
+                <a href="/sessions/destroy/" id="BannerText">Log Out</a>
+            </div>
+        </div>
+        <div id="welcome">
+            <h1 id="welcomeText">Create Your Destination!</h1>
+            {% if message %}
+                <h4 id="errorMessage">{{message}}</h4>
+            {% endif %}
+        </div>
+        <main>
+            <form 
+                {% if link %}        
+                    action="{{link}}"
+                {% else %}
+                    action = "/destinations/"
+                {% endif %}
+                method="post" id="reviewForm">
+                    {% csrf_token %}
+                    <div id="inputLabelsDestination">
+                        <label>Destination Name: </label>
+                        <label>Review: </label>
+                        <label>Rating: </label>
+                        <label>Public: </label>
+
+                    </div>
+    
+                    <div id="inputDiv" class="inputDestination">
+    
+                        <input type="text" name="destinationName" 
+                        {% if destinationName %}
+                        value="{{destinationName}}"
+                        {% endif %}
+                        >
+    
+                        <input type="text" name="review"
+                        {% if review %}
+                        value="{{review}}"
+                        {% endif %}
+                        >
+
+                        <input type="number" name="rating" min="0" max="5"
+                        {% if rating %}
+                        value="{{rating}}"
+                        {% endif %}
+                        >
+
+                        <input type="checkbox" name="public"
+                        {% if public %}
+                        checked
+                        {% endif %}
+                        >
+
+                    </div>
+                
+                    <button id="saveButton" type="submit">Save</button>
+            </form>
+        </main>
+        {% if link %}
+            <a href="{{link}}destroy/">Delete This Destination</a>
+        {% endif %}
+    </body>
+</html>
